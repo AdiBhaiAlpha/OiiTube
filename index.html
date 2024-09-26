@@ -5,119 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OiiTube | A Next-Gen 3D Experience</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        header {
-            background-color: #212121;
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 20px;
-        }
-        header input {
-            border-radius: 50px;
-            border: none;
-            padding: 10px;
-            width: 200px;
-        }
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 250px;
-            background-color: #383838;
-            padding-top: 70px;
-            display: none;
-            z-index: 1000;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
-        }
-        .sidebar.show {
-            display: block;
-        }
-        .sidebar button {
-            background-color: #d50000;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .sidebar ul li {
-            margin-bottom: 20px;
-        }
-        .sidebar ul li a {
-            display: block;
-            background-color: #505050;
-            color: white;
-            padding: 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 18px;
-            text-align: center;
-        }
-        .sidebar ul li a:hover {
-            background-color: #686868;
-        }
-        .main-content {
-            margin-left: 10px;
-            margin-right: 10px;
-        }
-        .video-container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-            padding: 15px;
-        }
-        iframe {
-            width: 100%;
-            height: 200px;
-            border: none;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-        .video-title {
-            font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-        .video-caption {
-            color: gray;
-            font-size: 12px;
-        }
-        footer {
-            background-color: #f8f8f8;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-            margin-top: 30px;
-        }
-        .toggle-btn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: #d50000;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1001;
-        }
+        /* Your existing styles... */
     </style>
 </head>
 <body>
@@ -125,7 +13,7 @@
 <header>
     <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
     <h1>.>>> OiiTube</h1>
-    <input type="text" placeholder="Search OiiTube">
+    <input type="text" id="search-input" placeholder="Search OiiTube" oninput="searchVideos()">
 </header>
 
 <div class="sidebar" id="sidebar">
@@ -136,13 +24,13 @@
     </ul>
 </div>
 
-<div class="main-content">
-    <div class="video-container">
+<div class="main-content" id="video-list">
+    <div class="video-container" data-title="Tere Naam Ki Rupkatha">
         <iframe src="https://www.youtube.com/embed/q9r-CtAC2QQ" allowfullscreen></iframe>
         <div class="video-title">Tere Naam Ki Rupkatha | Hindi Romantic Songs | Chitron Bhattacharjee</div>
         <div class="video-caption">Posted 9 months ago • 763K views</div>
     </div>
-    <div class="video-container">
+    <div class="video-container" data-title="Another Video 1">
         <iframe src="https://www.youtube.com/embed/video_id_2" allowfullscreen></iframe>
         <div class="video-title">Another Video 1</div>
         <div class="video-caption">Posted 1 year ago • 1.2M views</div>
@@ -158,6 +46,20 @@
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         sidebar.classList.toggle('show');
+    }
+
+    function searchVideos() {
+        const input = document.getElementById('search-input').value.toLowerCase();
+        const videoContainers = document.querySelectorAll('.video-container');
+        
+        videoContainers.forEach(container => {
+            const title = container.getAttribute('data-title').toLowerCase();
+            if (title.includes(input)) {
+                container.style.display = ''; // Show the video
+            } else {
+                container.style.display = 'none'; // Hide the video
+            }
+        });
     }
 </script>
 
